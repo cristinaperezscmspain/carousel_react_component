@@ -12,7 +12,7 @@
     "postdist:styles": "cp dist/sui-carousel.css dist/_sui-carousel.scss",
     "prepublish": "npm run dist",
 
-    "lint": "npm run lint:jscs && npm run lint:eslint && npm run lint:sass",
+    "lint": "npm run lint:eslint && npm run lint:sass",
     "lint:jscs": "cat ./{src,test}/**/*.{js,jsx} | jscs",
     "lint:eslint": "eslint --ext=\".js\" --ext=\".jsx\" src/",
     "lint:sass": "scss-lint src/",
