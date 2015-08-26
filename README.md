@@ -1,15 +1,29 @@
 # sui-carousel
 
 ## Description
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam commodi esse quis ipsam a iusto aut ratione ex optio ut! Illum alias voluptatibus dolores, perferendis deserunt totam illo reiciendis voluptatem.
+Slideshow/carousel react component created using [generator-sui-react](https://github.com/SUI-Components/generator-sui-react) and [react-swipe](https://github.com/jed/react-swipe) library.
 
 ## Instalation
-Clone this repository and run:
+Clone this repository. CD to folder sui-carousel and run:
 ```
 $ npm install
 ```
 
 ## Dependencies
+
+react-swipe needed
+
+```
+$ npm install react-swipe
+```
+
+## Setup
+
+Run:
+
+```
+$ npm run dev
+```
 
 To run the lint tasks we have dependencies of:
 
