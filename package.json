@@ -4,26 +4,21 @@
   "main": "dist/",
   "scripts": {
     "clean:dist": "rm -Rf ./dist/*",
-
     "predist": "npm run clean:dist -s",
     "dist": "npm run dist:scripts && npm run dist:styles",
     "dist:scripts": "babel src --out-dir dist",
     "dist:styles": "node-sass src/index.scss dist/sui-carousel.css --importer ./scripts/importer.js",
     "postdist:styles": "cp dist/sui-carousel.css dist/_sui-carousel.scss",
     "prepublish": "npm run dist",
-
     "lint": "npm run lint:eslint && npm run lint:sass",
     "lint:jscs": "cat ./{src,test}/**/*.{js,jsx} | jscs",
     "lint:eslint": "eslint --ext=\".js\" --ext=\".jsx\" src/",
     "lint:sass": "scss-lint src/",
-
     "test": "mocha --compilers js:babel/register --recursive",
     "test:watch": "npm run test -- -w test src --watch-extensions jsx",
-
     "dev": "npm run dev:open && npm run dev:serve",
     "dev:serve": "webpack-dev-server --devtool eval --progress --colors --content-base docs/",
     "dev:open": "opener http://localhost:8080",
-
     "predoc": "webpack --config webpack.doc.config.js",
     "doc": "npm run doc:build",
     "doc:build": "gh-pages -d docs"
@@ -37,7 +32,8 @@
     "test"
   ],
   "dependencies": {
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "react-swipe": "^2.3.0"
   },
   "devDependencies": {
     "@schibstedspain/frontend-pre-commit-rules": "latest",

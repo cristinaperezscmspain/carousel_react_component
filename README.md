@@ -9,14 +9,6 @@ Clone this repository. CD to folder sui-carousel and run:
 $ npm install
 ```
 
-## Dependencies
-
-react-swipe needed
-
-```
-$ npm install react-swipe
-```
-
 ## Setup
 
 Run:
@@ -46,13 +38,6 @@ $ npm run test:watch
 ```
 $ npm test
 ```
-## To publish yours docs page:
-```
-$ npm run doc
-```
-
-That will publish in a gh-page for `docs` folder.
-What is a component without a public demo, isn´t ?!
 
 ## Usage
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non perspiciatis, quod eum perferendis, facere enim hic. Quibusdam deleniti, distinctio. Molestias error quibusdam quo similique, laborum iste libero dolorum saepe et.
