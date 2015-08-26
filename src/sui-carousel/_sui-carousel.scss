@@ -2,5 +2,9 @@ $color: #cccccc;
 
 .sui-Carousel {
   background-color: $color;
+
+  &__slide {
+    text-align: center;
+  }
 }
 
