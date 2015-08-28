@@ -13,18 +13,28 @@ export default class Carousel extends React.Component {
   }
 
   render() {
-    var slideNodes = this.props.data.map(function (slideNode) {
+    var slideNodes = this.props.data.map(function (slideNode, index) {
       return (
-        <div className='sui-Carousel__slide'><Slide key={slideNode.id} imagePath={slideNode.imagePath} imageAlt={slideNode.imageAlt} imageHeight={slideNode.imageHeight} /></div>
+        <div className='sui-Carousel__slide' id={index}><Slide key={slideNode.id} imagePath={slideNode.imagePath} imageAlt={slideNode.imageAlt} imageHeight={slideNode.imageHeight} /></div>
       );
     });
+
+    var paginationNodes = this.props.data.map(function (paginationNode, index) {
+      return (
+        <span className='sui-Carousel__Pagination__page'>{index}</span>
+      );
+    });
+
     return (
       <div className='sui-Carousel'>
         <ReactSwipe continuous={true} ref='ReactSwipe' id='mySwipe'>
           {slideNodes}
         </ReactSwipe>
-        <button onClick={this.prev.bind(this)}>Prev</button>
-        <button onClick={this.next.bind(this)}>Next</button>
+        <div className='sui-Carousel__Pagination'>
+          <button onClick={this.prev.bind(this)}>Prev</button>
+          {paginationNodes}
+          <button onClick={this.next.bind(this)}>Next</button>
+        </div>
       </div>
     );
   }
