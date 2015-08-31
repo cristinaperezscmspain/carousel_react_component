@@ -1,36 +1,39 @@
 import React from 'react';
-//import ReactSwipe from 'react-swipe';
+
 
 export default class Pagination extends React.Component {
 
-  next() {
-    this.refs.ReactSwipe.swipe.next();
+  goPrev() {
+    this.props.onPrev();
   }
 
-  prev() {
-    this.refs.ReactSwipe.swipe.prev();
+  goNext() {
+    this.props.onNext();
   }
 
-  slideTo() {
-    this.refs.ReactSwipe.swipe.slide();
+  slideTo(index) {
+    this.props.onSlideTo(index);
   }
 
   render() {
-    var paginationNodes = this.props.data.map(function (paginationNode, index) {
+    var paginationNodes = this.props.data.map((paginationNode, index) => {
       return (
-        <button className='sui-Pagination__page'>{index}</button>
+        <button className='sui-Pagination__page' onClick={this.slideTo.bind(this, index)}>{index + 1}</button>
       );
     });
     return (
       <div className='sui-Pagination'>
+        <button onClick={this.goPrev.bind(this)}>prev</button>
         {paginationNodes}
-         <button onClick={this.prev.bind(this)}>Prev</button>
-        <button onClick={this.next.bind(this)}>Next</button>
+        <button onClick={this.goNext.bind(this)}>Next</button>
       </div>
     );
   }
 }
 
 Pagination.propTypes = {
-  data: React.PropTypes.array.isRequired
+  data: React.PropTypes.array.isRequired,
+  onPrev: React.PropTypes.function,
+  onNext: React.PropTypes.function,
+  onSlideTo: React.PropTypes.function
 };

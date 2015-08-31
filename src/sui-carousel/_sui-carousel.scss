@@ -2,21 +2,15 @@ $color: #cccccc;
 
 .sui-Carousel {
   background-color: $color;
+  overflow: hidden;
 
   &__slide {
     text-align: center;
   }
 
-  &__pagination {
-    overflow: hidden;
+  .sui-Pagination {
+    margin: 10px;
     text-align: center;
-
-    button,
-    span {
-      display: block;
-      float: left;
-      padding: 5px;
-    }
   }
 }
 
