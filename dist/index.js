@@ -61,9 +61,9 @@
 
 	var _src = __webpack_require__(158);
 
-	__webpack_require__(164);
+	__webpack_require__(166);
 
-	__webpack_require__(168);
+	__webpack_require__(170);
 
 	// Dataset
 	var data = [{
@@ -20506,13 +20506,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactSwipe = __webpack_require__(160);
+	var _suiSlides = __webpack_require__(160);
 
-	var _reactSwipe2 = _interopRequireDefault(_reactSwipe);
-
-	var _suiSlide = __webpack_require__(163);
-
-	var _suiSlide2 = _interopRequireDefault(_suiSlide);
+	var _suiSlides2 = _interopRequireDefault(_suiSlides);
 
 	var Carousel = (function (_React$Component) {
 	  _inherits(Carousel, _React$Component);
@@ -20520,47 +20516,44 @@
 	  function Carousel() {
 	    _classCallCheck(this, Carousel);
 
-	    _get(Object.getPrototypeOf(Carousel.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(Carousel.prototype), 'constructor', this).call(this);
+	    this.state = {
+	      position: 0
+	    };
 	  }
 
 	  _createClass(Carousel, [{
 	    key: 'next',
 	    value: function next() {
-	      this.refs.ReactSwipe.swipe.next();
+	      this.setState({
+	        position: this.state.position + 1
+	      });
 	    }
 	  }, {
 	    key: 'prev',
 	    value: function prev() {
-	      this.refs.ReactSwipe.swipe.prev();
+	      this.setState({
+	        position: this.state.position - 1
+	      });
+	    }
+	  }, {
+	    key: 'slideTo',
+	    value: function slideTo(index) {
+	      this.setState({ position: index });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var slideNodes = this.props.data.map(function (slideNode) {
-	        return _react2['default'].createElement(
-	          'div',
-	          { className: 'sui-Carousel__slide' },
-	          _react2['default'].createElement(_suiSlide2['default'], { key: slideNode.id, imagePath: slideNode.imagePath, imageAlt: slideNode.imageAlt, imageHeight: slideNode.imageHeight })
-	        );
-	      });
+
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'sui-Carousel' },
-	        _react2['default'].createElement(
-	          _reactSwipe2['default'],
-	          { continuous: true, ref: 'ReactSwipe', id: 'mySwipe' },
-	          slideNodes
-	        ),
-	        _react2['default'].createElement(
-	          'button',
-	          { onClick: this.prev.bind(this) },
-	          'Prev'
-	        ),
-	        _react2['default'].createElement(
-	          'button',
-	          { onClick: this.next.bind(this) },
-	          'Next'
-	        )
+	        _react2['default'].createElement(_suiSlides2['default'], {
+	          current: this.state.position,
+	          data: this.props.data,
+	          onNext: this.next.bind(this),
+	          onPrev: this.prev.bind(this),
+	          onSlideTo: this.slideTo.bind(this) })
 	      );
 	    }
 	  }]);
@@ -20579,12 +20572,105 @@
 /* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactSwipe = __webpack_require__(161);
+
+	var _reactSwipe2 = _interopRequireDefault(_reactSwipe);
+
+	var _suiSlide = __webpack_require__(164);
+
+	var _suiSlide2 = _interopRequireDefault(_suiSlide);
+
+	var _suiPagination = __webpack_require__(165);
+
+	var _suiPagination2 = _interopRequireDefault(_suiPagination);
+
+	var Slides = (function (_React$Component) {
+	  _inherits(Slides, _React$Component);
+
+	  function Slides() {
+	    _classCallCheck(this, Slides);
+
+	    _get(Object.getPrototypeOf(Slides.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Slides, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(props) {
+	      var current = props.current;
+	      this.refs.ReactSwipe.swipe.slide(current);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var slideNodes = this.props.data.map(function (slideNode, index) {
+	        return _react2['default'].createElement(
+	          'div',
+	          { className: 'sui-Carousel__slide', id: index },
+	          _react2['default'].createElement(_suiSlide2['default'], { key: slideNode.id, imagePath: slideNode.imagePath, imageAlt: slideNode.imageAlt, imageHeight: slideNode.imageHeight })
+	        );
+	      });
+
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'sui-Carousel' },
+	        _react2['default'].createElement(
+	          _reactSwipe2['default'],
+	          { continuous: true, ref: 'ReactSwipe', id: 'mySwipe' },
+	          slideNodes
+	        ),
+	        _react2['default'].createElement(_suiPagination2['default'], {
+	          data: this.props.data,
+	          onSlideTo: this.props.onSlideTo,
+	          onNext: this.props.onNext,
+	          onPrev: this.props.onPrev
+	        })
+	      );
+	    }
+	  }]);
+
+	  return Slides;
+	})(_react2['default'].Component);
+
+	exports['default'] = Slides;
+
+	Slides.propTypes = {
+	  data: _react2['default'].PropTypes.array.isRequired,
+	  onPrev: _react2['default'].PropTypes['function'],
+	  onNext: _react2['default'].PropTypes['function'],
+	  onSlideTo: _react2['default'].PropTypes['function']
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
 	(function (root, factory) {
 	  if (typeof module !== 'undefined' && module.exports) {
 	    module.exports = factory(
 	      __webpack_require__(2),
-	      __webpack_require__(161),
-	      __webpack_require__(162)
+	      __webpack_require__(162),
+	      __webpack_require__(163)
 	    );
 	  } else {
 	    root.ReactSwipe = factory(
@@ -20672,7 +20758,7 @@
 
 
 /***/ },
-/* 161 */
+/* 162 */
 /***/ function(module, exports) {
 
 	/*
@@ -21238,7 +21324,7 @@
 
 
 /***/ },
-/* 162 */
+/* 163 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21270,7 +21356,7 @@
 
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21324,16 +21410,107 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 164 */
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Pagination = (function (_React$Component) {
+	  _inherits(Pagination, _React$Component);
+
+	  function Pagination() {
+	    _classCallCheck(this, Pagination);
+
+	    _get(Object.getPrototypeOf(Pagination.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Pagination, [{
+	    key: 'goPrev',
+	    value: function goPrev() {
+	      this.props.onPrev();
+	    }
+	  }, {
+	    key: 'goNext',
+	    value: function goNext() {
+	      this.props.onNext();
+	    }
+	  }, {
+	    key: 'slideTo',
+	    value: function slideTo(index) {
+	      this.props.onSlideTo(index);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+
+	      var paginationNodes = this.props.data.map(function (paginationNode, index) {
+	        return _react2['default'].createElement(
+	          'button',
+	          { className: 'sui-Pagination__page', onClick: _this.slideTo.bind(_this, index) },
+	          index + 1
+	        );
+	      });
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'sui-Pagination' },
+	        _react2['default'].createElement(
+	          'button',
+	          { onClick: this.goPrev.bind(this) },
+	          'prev'
+	        ),
+	        paginationNodes,
+	        _react2['default'].createElement(
+	          'button',
+	          { onClick: this.goNext.bind(this) },
+	          'Next'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Pagination;
+	})(_react2['default'].Component);
+
+	exports['default'] = Pagination;
+
+	Pagination.propTypes = {
+	  data: _react2['default'].PropTypes.array.isRequired,
+	  onPrev: _react2['default'].PropTypes['function'],
+	  onNext: _react2['default'].PropTypes['function'],
+	  onSlideTo: _react2['default'].PropTypes['function']
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(165);
+	var content = __webpack_require__(167);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(167)(content, {});
+	var update = __webpack_require__(169)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21350,10 +21527,10 @@
 	}
 
 /***/ },
-/* 165 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(166)();
+	exports = module.exports = __webpack_require__(168)();
 	// imports
 
 
@@ -21364,7 +21541,7 @@
 
 
 /***/ },
-/* 166 */
+/* 168 */
 /***/ function(module, exports) {
 
 	/*
@@ -21420,7 +21597,7 @@
 
 
 /***/ },
-/* 167 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21645,16 +21822,16 @@
 
 
 /***/ },
-/* 168 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(169);
+	var content = __webpack_require__(171);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(167)(content, {});
+	var update = __webpack_require__(169)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21671,15 +21848,15 @@
 	}
 
 /***/ },
-/* 169 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(166)();
+	exports = module.exports = __webpack_require__(168)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".sui-Carousel {\n  background-color: #cccccc; }\n  .sui-Carousel__slide {\n    text-align: center; }\n", ""]);
+	exports.push([module.id, ".sui-Carousel {\n  background-color: #cccccc;\n  overflow: hidden; }\n  .sui-Carousel__slide {\n    text-align: center; }\n  .sui-Carousel .sui-Pagination {\n    margin: 10px;\n    text-align: center; }\n", ""]);
 
 	// exports
 
